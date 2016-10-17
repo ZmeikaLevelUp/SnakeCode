@@ -2,7 +2,12 @@ import java.util.Scanner;
 import java.util.Random;
 
 public class Snake001 {
-	
+
+	public static int size() {
+
+		final int N = 5;
+		return N;
+	} // метод размера
 	public static void main(String [] args) {
 
 		int length = 1; // кол-во секций
@@ -30,13 +35,17 @@ public class Snake001 {
 			System.out.println();
 		} // вывод поля
 		char p;
-		boolean alive = true, win = false;
-		while (alive && !win) {
+		boolean alive = true, win = false, wall = false;
+		while (alive && !win && !wall) {
 			Scanner sc = new Scanner(System.in);
 			p = sc.next().charAt(0);	
 			if (p == 'a') {
 				if (map[headY][headX] == '<') {
 					continue;					
+				}
+				else if (headX - 1 < 0) {
+					wall = true;
+					break;
 				}
 				else if (map[headY][headX - 1] == section) {
 					alive = false;
@@ -66,6 +75,10 @@ public class Snake001 {
 				if (map[headY][headX] == '^') {
 					continue;			
 				}
+				else if (headY - 1 < 0) {
+					wall = true;
+					break;
+				}
 				else if (map[headY - 1][headX] == section) {
 					alive = false;
 					break;
@@ -93,6 +106,10 @@ public class Snake001 {
 			if(p == 's') {
 				if (map[headY][headX] == 'v') {
 					continue;			
+				}
+				else if (headY + 1 > size() - 1) {
+					wall = true;
+					break;
 				}
 				else if (map[headY + 1][headX] == section) {
 					alive = false;
@@ -122,6 +139,10 @@ public class Snake001 {
 			if(p == 'd') {
 				if (map[headY][headX] == '>') {
 					continue;
+				}
+				else if (headX + 1 > size() - 1) {
+					wall = true;
+					break;
 				}
 				else if (map[headY][headX + 1] == section) {
 					alive = false;
@@ -161,8 +182,12 @@ public class Snake001 {
 		else if (win) {
 			System.out.println("You won! Congratulations! You can undoubtedly live the snake life!");
 		}
+		else if (wall) {
+			System.out.println("The snake had gone too far from it's nest and lost. Game over.");
+		}
 	}
 	public static void fruit(char[][] map) {
+
 		Random r = new Random();
 		int y, x;
 		do {
@@ -172,11 +197,8 @@ public class Snake001 {
 		while (map[y][x] != '.');
 		map[y][x] = '@';
 	} // метод для фрукта
-	public static int size() {
-		final int N = 5;
-		return N;
-	} // метод размера
 	public static void move(int[] sectionX, int[] sectionY, int length, int headX, int headY) {
+
 		for (int i = 0; i < length - 1; i++) {
 			sectionX[i] = sectionX[i + 1];
 			sectionY[i] = sectionY[i + 1];
@@ -185,6 +207,7 @@ public class Snake001 {
 		sectionY[length - 1] = headY;
 	} // метод для движения
 	public static void growth(int[] sectionX, int[] sectionY, int headX, int headY, int length) {
+
 		sectionX[length - 1] = headX;
 		sectionY[length - 1] = headY;
 	} // метод для роста
