@@ -11,12 +11,13 @@ public class Snake001 {
 	public static void main(String [] args) {
 
 		int length = 1; // кол-во секций
-		int [] sectionY = new int [size() * size() - 1];
-		int [] sectionX = new int [size() * size() - 1];
+		int [] sectionY = new int [size() * size() - 1]; // массив координат Y секций змеи
+		int [] sectionX = new int [size() * size() - 1]; // массив координат Х секций змеи
 		char [][] map = new char [size()][size()]; // поле size x size
 		int headX = size() / 2, headY = size() / 2; // начальные координаты головы
-		sectionX[0] = size() / 2 + 1;
-		sectionY[0] = size() / 2; // координаты секции змеи
+		sectionX[0] = size() / 2 + 1;//
+		sectionY[0] = size() / 2;	 // координаты секции змеи
+		// Заполнение поля
 		for (int i = 0; i < size(); i++) {
 			for (int j = 0; j < size(); j++) {
 				if ((i == 0) || (i == size() - 1) || (j == 0) || (j == size() - 1)) {
@@ -26,7 +27,8 @@ public class Snake001 {
 					map[i][j] = ' ';
 				}
 			}
-		} // заполнение поля
+		}
+		//*
 		map[size() / 2][0] = ' ';
 		map[size() / 2][size() - 1] = ' ';
 		map[0][size() / 2] = ' ';
