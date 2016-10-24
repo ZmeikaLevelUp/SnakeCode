@@ -35,7 +35,7 @@ public class Snake001 {
 		map[0][size() / 2] = ' ';
 		map[size() - 1][size() / 2] = ' ';
 		// *
-		map[headY][headX] = '>'; // Размещение головы
+		map[headY][headX] = '<'; // Размещение головы
 		map[sectionY[0]][sectionX[0]] = '*'; // Размещение секции
 		fruit(map);
 		// Вывод поля
@@ -58,13 +58,13 @@ public class Snake001 {
 				if (destCoord < 0) {
 					destCoord = size() - 1;
 				}
-				if (map[headY][headX] == '<') {
+				if (map[headY][headX] == '>') {
 					continue;					
 				}
 				else if (map[headY][destCoord] == '#') {
 					wall = true;
 				}
-				else if (map[headY][destCoord] != '@') {
+				else if (map[headY][destCoord] != 'o') {
 					move(map, sectionX, sectionY, length, headX, headY);
 					headX = destCoord;
 					for (int i = 0; i < length; i++) {
@@ -74,13 +74,13 @@ public class Snake001 {
 							break;
 						}
 					}
-					map[headY][headX] = '>';
+					map[headY][headX] = '<';
 				}
 				else {
 					length++;
 					growth(map, sectionX, sectionY, headX, headY, length);
 					headX = destCoord;
-					map[headY][headX] = '>';
+					map[headY][headX] = '<';
 					if (length == (size() - 2) * (size() - 2) + 4) {
 						win = true;
 						break;
@@ -93,13 +93,13 @@ public class Snake001 {
 				if (destCoord < 0) {
 					destCoord = size() - 1;
 				}
-				if (map[headY][headX] == '^') {
+				if (map[headY][headX] == 'v') {
 					continue;			
 				}
 				else if (map[destCoord][headX] == '#') {
 					wall = true;
 				}
-				else if (map[destCoord][headX] != '@') {
+				else if (map[destCoord][headX] != 'o') {
 					move(map, sectionX, sectionY, length, headX, headY);
 					headY = destCoord;
 					for (int i = 0; i < length; i++) {
@@ -108,13 +108,13 @@ public class Snake001 {
 							break;
 						}
 					}
-					map[headY][headX] = 'v';
+					map[headY][headX] = '^';
 				}
 				else {
 					length++;
 					growth(map, sectionX, sectionY, headX, headY, length);
 					headY = destCoord;
-					map[headY][headX] = 'v';
+					map[headY][headX] = '^';
 					if (length == (size() - 2) * (size() - 2) + 4) {
 						win = true;
 						break;
@@ -127,13 +127,13 @@ public class Snake001 {
 				if (destCoord > size() - 1) {
 					destCoord = 0;
 				}
-				if (map[headY][headX] == 'v') {
+				if (map[headY][headX] == '^') {
 					continue;			
 				}
 				else if (map[destCoord][headX] == '#') {
 					wall = true;
 				}
-				else if (map[destCoord][headX] != '@') {
+				else if (map[destCoord][headX] != 'o') {
 					move(map, sectionX, sectionY, length, headX, headY);
 					headY = destCoord;
 					for (int i = 0; i < length; i++) {
@@ -142,13 +142,13 @@ public class Snake001 {
 							break;
 						}
 					}
-					map[headY][headX] = '^';
+					map[headY][headX] = 'v';
 				}
 				else {
 					length++;
 					growth(map, sectionX, sectionY, headX, headY, length);
 					headY = destCoord;
-					map[headY][headX] = '^';
+					map[headY][headX] = 'v';
 					if (length == (size() - 2) * (size() - 2) + 4) {
 						win = true;
 						break;
@@ -161,13 +161,13 @@ public class Snake001 {
 				if (destCoord > size() - 1) {
 					destCoord = 0;
 				}
-				if (map[headY][headX] == '>') {
+				if (map[headY][headX] == '<') {
 					continue;
 				}
 				else if (map[headY][destCoord] == '#') {
 					wall = true;
 				}
-				else if (map[headY][destCoord] != '@') {
+				else if (map[headY][destCoord] != 'o') {
 					move(map, sectionX, sectionY, length, headX, headY);
 					headX = destCoord;
 					for (int i = 0; i < length; i++) {
@@ -176,13 +176,13 @@ public class Snake001 {
 							break;
 						}
 					}
-					map[headY][headX] = '<';
+					map[headY][headX] = '>';
 				}
 				else {
 					length++;
 					growth(map, sectionX, sectionY, headX, headY, length);
 					headX = destCoord;
-					map[headY][headX] = '<';
+					map[headY][headX] = '>';
 					if (length == (size() - 2) * (size() - 2) + 4) {
 						win = true;
 						break;
@@ -218,7 +218,7 @@ public class Snake001 {
 			x = r.nextInt(size());
 		}
 		while (map[y][x] != ' ');
-		map[y][x] = '@';
+		map[y][x] = 'o';
 	}
 	// *
 	// Метод для движения
