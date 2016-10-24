@@ -5,7 +5,7 @@ public class Snake001 {
 
 	public static int size() {
 
-		final int N = 8;
+		final int N = 7;
 		return N;
 	} // метод размера
 	public static void main(String [] args) {
@@ -28,41 +28,45 @@ public class Snake001 {
 				}
 			}
 		}
-		//*
+		// *
+		// Создание "тоннелей"" в стенах
 		map[size() / 2][0] = ' ';
 		map[size() / 2][size() - 1] = ' ';
 		map[0][size() / 2] = ' ';
 		map[size() - 1][size() / 2] = ' ';
-		map[headY][headX] = '>'; // размещение головы
-		map[sectionY[0]][sectionX[0]] = '*';
+		// *
+		map[headY][headX] = '>'; // Размещение головы
+		map[sectionY[0]][sectionX[0]] = '*'; // Размещение секции
 		fruit(map);
+		// Вывод поля
 		for (int i = 0; i < size(); i++) {
 			for (int j = 0; j < size(); j++) {
 				System.out.print(map[i][j]);
 				System.out.print(" ");
 			}	
 			System.out.println();
-		} // вывод поля
-		char p;
-		int destCell;
+		}
+		// *
+		char input;
+		int destCoord; // Координата направления
 		boolean alive = true, win = false, wall = false;
 		while (alive && !win && !wall) {
 			Scanner sc = new Scanner(System.in);
-			p = sc.next().charAt(0);	
-			if (p == 'a') {
-				destCell = headX - 1;
-				if (destCell < 0) {
-					destCell = size() - 1;
+			input = sc.next().charAt(0);	
+			if (input == 'a') {
+				destCoord = headX - 1;
+				if (destCoord < 0) {
+					destCoord = size() - 1;
 				}
 				if (map[headY][headX] == '<') {
 					continue;					
 				}
-				else if (map[headY][destCell] == '#') {
+				else if (map[headY][destCoord] == '#') {
 					wall = true;
 				}
-				else if (map[headY][destCell] != '@') {
+				else if (map[headY][destCoord] != '@') {
 					move(map, sectionX, sectionY, length, headX, headY);
-					headX = destCell;
+					headX = destCoord;
 					for (int i = 0; i < length; i++) {
 						if (headX == sectionX[i] && headY == sectionY[i]) {
 							alive = false;
@@ -75,29 +79,29 @@ public class Snake001 {
 				else {
 					length++;
 					growth(map, sectionX, sectionY, headX, headY, length);
-					headX = destCell;
+					headX = destCoord;
 					map[headY][headX] = '>';
-					if (length == 4 * (size() - 1)) {
+					if (length == (size() - 2) * (size() - 2) + 4) {
 						win = true;
 						break;
 					}
 					fruit(map);
 				}
 			}
-			if(p == 'w') {
-				destCell = headY - 1;
-				if (destCell < 0) {
-					destCell = size() - 1;
+			if(input == 'w') {
+				destCoord = headY - 1;
+				if (destCoord < 0) {
+					destCoord = size() - 1;
 				}
 				if (map[headY][headX] == '^') {
 					continue;			
 				}
-				else if (map[destCell][headX] == '#') {
+				else if (map[destCoord][headX] == '#') {
 					wall = true;
 				}
-				else if (map[destCell][headX] != '@') {
+				else if (map[destCoord][headX] != '@') {
 					move(map, sectionX, sectionY, length, headX, headY);
-					headY = destCell;
+					headY = destCoord;
 					for (int i = 0; i < length; i++) {
 						if (headX == sectionX[i] && headY == sectionY[i]) {
 							alive = false;
@@ -109,29 +113,29 @@ public class Snake001 {
 				else {
 					length++;
 					growth(map, sectionX, sectionY, headX, headY, length);
-					headY = destCell;
+					headY = destCoord;
 					map[headY][headX] = 'v';
-					if (length == 4 * (size() - 1)) {
+					if (length == (size() - 2) * (size() - 2) + 4) {
 						win = true;
 						break;
 					}
 					fruit(map);
 				}
 			}
-			if(p == 's') {
-				destCell = headY + 1;
-				if (destCell > size() - 1) {
-					destCell = 0;
+			if(input == 's') {
+				destCoord = headY + 1;
+				if (destCoord > size() - 1) {
+					destCoord = 0;
 				}
 				if (map[headY][headX] == 'v') {
 					continue;			
 				}
-				else if (map[destCell][headX] == '#') {
+				else if (map[destCoord][headX] == '#') {
 					wall = true;
 				}
-				else if (map[destCell][headX] != '@') {
+				else if (map[destCoord][headX] != '@') {
 					move(map, sectionX, sectionY, length, headX, headY);
-					headY = destCell;
+					headY = destCoord;
 					for (int i = 0; i < length; i++) {
 						if (headX == sectionX[i] && headY == sectionY[i]) {
 							alive = false;
@@ -143,29 +147,29 @@ public class Snake001 {
 				else {
 					length++;
 					growth(map, sectionX, sectionY, headX, headY, length);
-					headY = destCell;
+					headY = destCoord;
 					map[headY][headX] = '^';
-					if (length == 4 * (size() - 1)) {
+					if (length == (size() - 2) * (size() - 2) + 4) {
 						win = true;
 						break;
 					}
 					fruit(map);
 				}
 			}	
-			if(p == 'd') {
-				destCell = headX + 1;
-				if (destCell > size() - 1) {
-					destCell = 0;
+			if(input == 'd') {
+				destCoord = headX + 1;
+				if (destCoord > size() - 1) {
+					destCoord = 0;
 				}
 				if (map[headY][headX] == '>') {
 					continue;
 				}
-				else if (map[headY][destCell] == '#') {
+				else if (map[headY][destCoord] == '#') {
 					wall = true;
 				}
-				else if (map[headY][destCell] != '@') {
+				else if (map[headY][destCoord] != '@') {
 					move(map, sectionX, sectionY, length, headX, headY);
-					headX = destCell;
+					headX = destCoord;
 					for (int i = 0; i < length; i++) {
 						if (headX == sectionX[i] && headY == sectionY[i]) {
 							alive = false;
@@ -177,9 +181,9 @@ public class Snake001 {
 				else {
 					length++;
 					growth(map, sectionX, sectionY, headX, headY, length);
-					headX = destCell;
+					headX = destCoord;
 					map[headY][headX] = '<';
-					if (length == 4 * (size() - 1)) {
+					if (length == (size() - 2) * (size() - 2) + 4) {
 						win = true;
 						break;
 					}
@@ -204,6 +208,7 @@ public class Snake001 {
 			System.out.println("The snake hit the wall and died. Game over.");
 		}
 	}
+	// Метод для фрукта
 	public static void fruit(char[][] map) {
 
 		Random r = new Random();
@@ -214,7 +219,9 @@ public class Snake001 {
 		}
 		while (map[y][x] != ' ');
 		map[y][x] = '@';
-	} // метод для фрукта
+	}
+	// *
+	// Метод для движения
 	public static void move(char[][] map, int[] sectionX, int[] sectionY, int length, int headX, int headY) {
 
 		map[sectionY[0]][sectionX[0]] = ' ';
@@ -225,11 +232,14 @@ public class Snake001 {
 		sectionX[length - 1] = headX;
 		sectionY[length - 1] = headY;
 		map[headY][headX] = '*';
-	} // метод для движения
+	}
+	// *
+	// Метод для роста
 	public static void growth(char[][] map, int[] sectionX, int[] sectionY, int headX, int headY, int length) {
 
 		sectionX[length - 1] = headX;
 		sectionY[length - 1] = headY;
 		map[headY][headX] = '*';
-	} // метод для роста
+	}
+	// *
 }
